@@ -7,4 +7,7 @@ module.exports = {
 
   // Set user details
   setWithId: db.setWithId,
+
+  // Delete user
+  delById: db.delById,
 };

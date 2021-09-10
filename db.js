@@ -50,4 +50,8 @@ module.exports = {
       }
     );
   },
+
+  delById: (id) => {
+    client.del(id);
+  },
 };

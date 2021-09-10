@@ -44,5 +44,11 @@ router.post('/user/add', (req, res) => {
   res.redirect('/');
 });
 
+// Delete user
+router.delete('/user/delete/:id', (req, res) => {
+  dbServices.delById(req.params.id);
+  res.redirect('/');
+});
+
 // Export router
 module.exports = router;

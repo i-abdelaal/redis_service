@@ -12,14 +12,42 @@ module.exports = {
     });
   },
 
-  // Get all
-  getAll: (id) => {
-    client.hgetall(id, (err, obj) => {
-      if (!obj) {
-        return null;
-      } else {
-        return obj;
-      }
+  // Get user by ID
+  getById: (id) => {
+    return new Promise((resolve, reject) => {
+      client.hgetall(id, (err, obj) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+        resolve(obj);
+      });
     });
+  },
+
+  // Set user details
+  setWithId: (DTO) => {
+    const { id, first_name, last_name, email, phone } = DTO;
+    client.hmset(
+      id,
+      [
+        'first_name',
+        first_name,
+        'last_name',
+        last_name,
+        'email',
+        email,
+        'phone',
+        phone,
+      ],
+      (reply, err) => {
+        if (err) {
+          console.log(err);
+          return null;
+        }
+
+        return reply;
+      }
+    );
   },
 };

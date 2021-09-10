@@ -1,5 +1,6 @@
 // Import modules
 const express = require('express');
+const db = require('./db');
 
 // Import db services
 const dbServices = require('./dbServices');
@@ -12,10 +13,11 @@ router.get('/', (req, res) => {
 });
 
 // Search processing
-router.post('/user/search', (req, res) => {
+router.post('/user/search', async (req, res) => {
   let id = req.body.id;
 
-  const obj = dbServices.getAll(id);
+  const obj = await dbServices.getById(id);
+
   if (!obj) {
     res.render('searchusers', { error: 'User does not found' });
   } else {
@@ -24,6 +26,22 @@ router.post('/user/search', (req, res) => {
       user: obj,
     });
   }
+});
+
+// Add user page
+router.get('/user/add', (req, res) => {
+  res.render('adduser');
+});
+
+// Add user processing
+router.post('/user/add', (req, res) => {
+  const DTO = req.body;
+
+  const reply = dbServices.setWithId(DTO);
+  if (!reply) {
+    res.render('adduser', { error: 'Something went wrong' });
+  }
+  res.redirect('/');
 });
 
 // Export router

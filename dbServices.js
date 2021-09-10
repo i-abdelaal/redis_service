@@ -2,6 +2,9 @@
 const db = require('./db');
 
 module.exports = {
-  getAll: (id) => db.getAll(id),
+  // Get user By ID
+  getById: db.getById,
+
+  // Set user details
+  setWithId: db.setWithId,
 };
-// Get all

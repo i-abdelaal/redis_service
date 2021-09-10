@@ -1,31 +1,14 @@
 // Import modules
 const express = require('express');
-const exphbs = require('express-handlebars');
-const path = require('path');
-const methodOverride = require('method-override');
-const redis = require('redis');
-
-// Set port
-const port = process.env.PORT || 3000;
 
 // Init app
 const app = express();
 
-// View engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
+// Init middlewares
+require('./startup')(app);
 
-// Body-parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-// Method override
-app.use(methodOverride('_method'));
-
-// Route
-app.get('/', (req, res, next) => {
-  res.render('searchusers');
-});
+// Set port
+const port = process.env.PORT || 3000;
 
 // Launch server
 app.listen(port, () => {
